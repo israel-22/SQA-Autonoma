@@ -53,9 +53,36 @@
         @foreach (var pokemon in Model.Results)
         {
             <div class="pokemon-card">
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/@(pokemon.Id).png" alt="@pokemon.Name">
                 <h3>@pokemon.Name</h3>
-                <p>ID: @pokemon.Id</p>
+                <img src="@(!string.IsNullOrEmpty(pokemon.Sprites?.Front_Default) ? pokemon.Sprites.Front_Default : "/images/default-pokemon.png")" alt="@pokemon.Name">
+
+                <!-- Mostrar habilidades -->
+                <p><strong>Habilidades:</strong></p>
+                <ul>
+                    @foreach (var ability in pokemon.Abilities)
+                    {
+                        <li>@ability.Ability.Name</li>
+                    }
+                </ul>
+
+                <a href="@Url.Action("Details", new { id = pokemon.Id })" class="btn btn-info">
+                    Ver Detalles (ID: @pokemon.Id)
+                </a>
+
+
+                <!-- Mostrar tipos -->
+                <p><strong>Tipos:</strong></p>
+                <ul>
+                    @foreach (var type in pokemon.Types)
+                    {
+                        <li>@type.Type.Name</li>
+                    }
+                </ul>
+
+                <!-- Enlace para ver más detalles -->
+                <div>
+                    <a href="@Url.Action("Details", new { id = pokemon.Id })" class="btn btn-info">Ver Detalles</a>
+                </div>
             </div>
         }
     </div>
@@ -63,12 +90,11 @@
     <div class="pagination">
         @if (ViewBag.PreviousPage != null)
         {
-            <a href="@Url.Action("Index", new { page = ViewBag.PreviousPage })">Anterior</a>
+            <a href="@Url.Action("Index", new { page = ViewBag.PreviousPage })" class="btn btn-primary">Página Anterior</a>
         }
-
         @if (ViewBag.NextPage != null)
         {
-            <a href="@Url.Action("Index", new { page = ViewBag.NextPage })">Siguiente</a>
+            <a href="@Url.Action("Index", new { page = ViewBag.NextPage })" class="btn btn-primary">Página Siguiente</a>
         }
     </div>
 </body>

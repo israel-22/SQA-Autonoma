@@ -36,3 +36,4 @@ D:\Backup\Documentos\Tareas de istituto\Cuarto Semestre\SQA\API-Pokemon\Aplicaci
 D:\Backup\Documentos\Tareas de istituto\Cuarto Semestre\SQA\API-Pokemon\Aplicación Web MVC\PokémonApp\obj\Debug\net8.0\PokémonApp.pdb
 D:\Backup\Documentos\Tareas de istituto\Cuarto Semestre\SQA\API-Pokemon\Aplicación Web MVC\PokémonApp\obj\Debug\net8.0\PokémonApp.genruntimeconfig.cache
 D:\Backup\Documentos\Tareas de istituto\Cuarto Semestre\SQA\API-Pokemon\Aplicación Web MVC\PokémonApp\obj\Debug\net8.0\ref\PokémonApp.dll
+D:\Backup\Documentos\Tareas de istituto\Cuarto Semestre\SQA\API-Pokemon\Aplicación Web MVC\PokémonApp\obj\Debug\net8.0\PokémonApp.sourcelink.json

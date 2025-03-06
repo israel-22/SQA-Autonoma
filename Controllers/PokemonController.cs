@@ -25,4 +25,30 @@ public class PokemonController : Controller
         // Pasamos el resultado a la vista
         return View(pokemonList);  // Asegúrate de que la vista espera un modelo de tipo PokemonList
     }
+
+
+    // Acción para ver los detalles de un Pokémon
+    public async Task<IActionResult> Details(string name)
+    {
+        try
+        {
+            // Obtener el Pokémon por su nombre en lugar de por su ID
+            var pokemon = await _pokemonService.GetPokemonDetailsByNameAsync(name);
+            if (pokemon == null)
+            {
+                return NotFound(); // Si no se encuentra el Pokémon, retorna un 404
+            }
+            return View(pokemon); // Devolver la vista con los detalles del Pokémon
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al obtener los detalles del Pokémon: {ex.Message}");
+            return View("Error"); // Retorna una vista de error en caso de excepción
+        }
+    }
+
+
+
+
 }
+

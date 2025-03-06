@@ -74,7 +74,8 @@
                     }
                 </ul>
 
-                <p>ID: @pokemon.Id</p>
+                <!-- Enlace para ver más detalles -->
+                <a href="@Url.Action("Details", new { name = pokemon.Name })" class="btn btn-info">Ver Detalles</a>
             </div>
         }
     </div>
@@ -82,12 +83,11 @@
     <div class="pagination">
         @if (ViewBag.PreviousPage != null)
         {
-            <a href="@Url.Action("Index", new { page = ViewBag.PreviousPage })">Anterior</a>
+            <a href="@Url.Action("Index", new { page = ViewBag.PreviousPage })" class="btn btn-primary">Página Anterior</a>
         }
-
         @if (ViewBag.NextPage != null)
         {
-            <a href="@Url.Action("Index", new { page = ViewBag.NextPage })">Siguiente</a>
+            <a href="@Url.Action("Index", new { page = ViewBag.NextPage })" class="btn btn-primary">Página Siguiente</a>
         }
     </div>
 </body>

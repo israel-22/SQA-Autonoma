@@ -37,6 +37,7 @@ namespace PokemonMVC.Services
                             var pokemonDetailsJson = await pokemonDetailsResponse.Content.ReadAsStringAsync();
                             var pokemonDetails = JsonConvert.DeserializeObject<Pokemon>(pokemonDetailsJson);
 
+
                             // Asignar los sprites, habilidades y tipos si están presentes
                             pokemon.Sprites = pokemonDetails.Sprites ?? new Sprites { Front_Default = "/default-pokemon.png" };
                             pokemon.Abilities = pokemonDetails.Abilities ?? new List<AbilityWrapper>();
@@ -66,6 +67,37 @@ namespace PokemonMVC.Services
             {
                 Console.WriteLine($"Error al obtener los Pokémon: {ex.Message}");
                 return new PokemonList(); // Retornamos una lista vacía en caso de error
+            }
+        }
+        // Método para obtener los detalles de un Pokémon individual
+        public async Task<Pokemon> GetPokemonDetailsByNameAsync(string name)
+        {
+            try
+            {
+                // Usar el nombre del Pokémon en la URL de la API
+                var response = await _httpClient.GetAsync($"{ApiUrl}{name.ToLower()}"); // Convertir el nombre a minúsculas por compatibilidad con la API
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    var pokemon = JsonConvert.DeserializeObject<Pokemon>(jsonResponse);
+
+                    // Si no se obtienen detalles, asignar valores por defecto
+                    pokemon.Sprites = pokemon.Sprites ?? new Sprites { Front_Default = "/default-pokemon.png" };
+                    pokemon.Abilities = pokemon.Abilities ?? new List<AbilityWrapper>();
+                    pokemon.Types = pokemon.Types ?? new List<TypeWrapper>();
+
+                    return pokemon;
+                }
+                else
+                {
+                    throw new HttpRequestException($"Error al obtener los detalles del Pokémon: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener el Pokémon: {ex.Message}");
+                return null; // Retornamos null en caso de error
             }
         }
     }

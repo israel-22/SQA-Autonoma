@@ -1,10 +1,13 @@
-﻿namespace PokemonMVC.Models
+﻿using System.Text.Json.Serialization;
+
+namespace PokemonMVC.Models
 {
     // Modelo para un solo Pokémon
     public class Pokemon
     {
-        public string Name { get; set; }
+    
         public int Id { get; set; }
+        public string Name { get; set; }
         public Sprites Sprites { get; set; }
         public List<AbilityWrapper> Abilities { get; set; }
         public List<TypeWrapper> Types { get; set; }  // Nuevos tipos para incluir el tipo del Pokémon
