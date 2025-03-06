@@ -2,15 +2,16 @@
 using PokemonMVC.Models;
 using PokemonMVC.Services;
 
-public class PokemonController : Controller
+public class HomeController : Controller
 {
     private readonly PokemonService _pokemonService;
 
-    public PokemonController(PokemonService pokemonService)
+    public HomeController(PokemonService pokemonService)
     {
         _pokemonService = pokemonService;
     }
 
+    // Acción para la vista principal
     public async Task<IActionResult> Index(int page = 1)
     {
         int pageSize = 20;  // Número de Pokémon por página
@@ -26,13 +27,12 @@ public class PokemonController : Controller
         return View(pokemonList);  // Asegúrate de que la vista espera un modelo de tipo PokemonList
     }
 
-
     // Acción para ver los detalles de un Pokémon
     public async Task<IActionResult> Details(string name)
     {
         try
         {
-            // Obtener el Pokémon por su nombre en lugar de por su ID
+            // Obtener el Pokémon por su nombre
             var pokemon = await _pokemonService.GetPokemonDetailsByNameAsync(name);
             if (pokemon == null)
             {
@@ -46,9 +46,4 @@ public class PokemonController : Controller
             return View("Error"); // Retorna una vista de error en caso de excepción
         }
     }
-
-
-
-
 }
-

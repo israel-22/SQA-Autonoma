@@ -5,13 +5,16 @@ namespace PokemonMVC.Models
     // Modelo para un solo Pokémon
     public class Pokemon
     {
-    
+
         public int Id { get; set; }
         public string Name { get; set; }
+        public int Height { get; set; }  // Se agregó esta propiedad
+        public int Weight { get; set; }  // Se agregó esta propiedad
         public Sprites Sprites { get; set; }
         public List<AbilityWrapper> Abilities { get; set; }
-        public List<TypeWrapper> Types { get; set; }  // Nuevos tipos para incluir el tipo del Pokémon
-        public string Url { get; set; }  // Añadir esta propiedad
+        public List<TypeWrapper> Types { get; set; }
+        public string Url { get; set; }
+
     }
 
     // Clase para envolver la lista de Pokémon (Resultados)
@@ -49,4 +52,15 @@ namespace PokemonMVC.Models
     {
         public string Name { get; set; }
     }
+
+    public class TypeContainer
+    {
+        public TypeInfo Type { get; set; }
+    }
+
+    public class TypeInfo
+    {
+        public string Name { get; set; }
+    }
+
 }
