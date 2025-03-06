@@ -1,0 +1,37 @@
+using Microsoft.AspNetCore.Mvc;
+using PokemonMVC.Models;
+using PokemonMVC.Services;
+
+namespace PokemonMVC.Controllers
+{
+    public class PokemonController : Controller
+    {
+        private readonly PokemonService _pokemonService;
+
+        public PokemonController(PokemonService pokemonService)
+        {
+            _pokemonService = pokemonService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var pokemonNames = new List<string>
+            {
+                "bulbasaur", "ivysaur", "venusaur", "charmander", "charmeleon", "charizard", "squirtle", "wartortle", "blastoise",
+                "caterpie", "metapod", "butterfree", "weedle", "kakuna", "beedrill", "pidgey", "pidgeotto", "pidgeot", "rattata", "raticate"
+            };
+
+            // Usamos el servicio para obtener los Pokémon
+            var pokemons = await _pokemonService.GetPokemonsAsync(pokemonNames);
+
+            // Creamos un objeto PokemonList
+            var pokemonList = new PokemonList
+            {
+                Results = pokemons
+            };
+
+            // Pasamos el PokemonList a la vista
+            return View(pokemonList);
+        }
+    }
+}

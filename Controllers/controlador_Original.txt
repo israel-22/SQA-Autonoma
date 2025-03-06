@@ -1,0 +1,49 @@
+using Microsoft.AspNetCore.Mvc;
+using PokémonApp.Models;
+using PokemonMVC.Models;
+using PokemonMVC.Services;
+using System.Diagnostics;
+
+namespace PokemonMVC.Controllers
+{
+    public class PokemonController : Controller
+    {
+        private readonly PokemonService _pokemonService;
+
+        // Inyectamos el servicio de Pokémon
+        public PokemonController(PokemonService pokemonService)
+        {
+            _pokemonService = pokemonService;
+        }
+
+        // Acción para mostrar el Pokémon por nombre
+        public async Task<IActionResult> Index(string pokemonName = "pikachu") // Valor predeterminado es "pikachu"
+        {
+            // Obtenemos el Pokémon desde el servicio
+            var pokemon = await _pokemonService.GetPokemonByNameAsync(pokemonName);
+
+            // Verificamos si se obtuvo un Pokémon
+            if (pokemon == null || string.IsNullOrEmpty(pokemon.Name))
+            {
+                ViewBag.ErrorMessage = "No se pudo encontrar el Pokémon solicitado.";
+                return View(); // Retornamos la vista con el mensaje de error
+            }
+
+            // Si el Pokémon existe, lo pasamos a la vista
+            return View(pokemon);
+        }
+
+        // Acción para la vista de privacidad (opcional)
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        // Acción para manejar los errores
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}

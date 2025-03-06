@@ -1,0 +1,75 @@
+@model PokemonMVC.Models.PokemonList
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pokémon</title>
+    <style>
+        .pokemon-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .pokemon-card {
+            width: 150px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+
+            .pokemon-card img {
+                width: 100%;
+                height: auto;
+                border-radius: 5px;
+            }
+
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+            .pagination a {
+                margin: 0 5px;
+                padding: 5px 10px;
+                text-decoration: none;
+                border: 1px solid #ccc;
+            }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Pokémon</h1>
+
+    <div class="pokemon-list">
+        @foreach (var pokemon in Model.Results)
+        {
+            <div class="pokemon-card">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/@(pokemon.Id).png" alt="@pokemon.Name">
+                <h3>@pokemon.Name</h3>
+                <p>ID: @pokemon.Id</p>
+            </div>
+        }
+    </div>
+
+    <div class="pagination">
+        @if (ViewBag.PreviousPage != null)
+        {
+            <a href="@Url.Action("Index", new { page = ViewBag.PreviousPage })">Anterior</a>
+        }
+
+        @if (ViewBag.NextPage != null)
+        {
+            <a href="@Url.Action("Index", new { page = ViewBag.NextPage })">Siguiente</a>
+        }
+    </div>
+</body>
+</html>

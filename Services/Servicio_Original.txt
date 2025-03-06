@@ -1,0 +1,52 @@
+using Newtonsoft.Json;
+using PokemonMVC.Models;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
+namespace PokemonMVC.Services
+{
+    public class PokemonService
+    {
+        private readonly HttpClient _httpClient;
+        private const string ApiUrl = "https://pokeapi.co/api/v2/pokemon/";
+
+        public PokemonService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
+        // Método actualizado para obtener una lista de Pokémon
+        public async Task<List<Pokemon>> GetPokemonsAsync(List<string> names)
+        {
+            var pokemons = new List<Pokemon>();
+
+            foreach (var name in names)
+            {
+                try
+                {
+                    var response = await _httpClient.GetAsync($"{ApiUrl}{name.ToLower()}");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var jsonResponse = await response.Content.ReadAsStringAsync();
+                        var pokemon = JsonConvert.DeserializeObject<Pokemon>(jsonResponse);
+                        if (pokemon != null)
+                        {
+                            pokemons.Add(pokemon);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Error al obtener {name}: {response.StatusCode}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al obtener el Pokémon {name}: {ex.Message}");
+                }
+            }
+
+            return pokemons;
+        }
+    }
+}
